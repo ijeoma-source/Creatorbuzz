@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ijeoma Nneji — Creatorbuzz SDR Pitch</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#F0EDD8;font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:2.5rem 1rem}
+.deck{position:relative;background:#fff;border:1.5px solid #111;border-radius:18px;box-shadow:5px 5px 0 #111;width:100%;max-width:720px;overflow:hidden}
+.slide{display:none;padding:3rem 3.5rem 5.5rem;position:relative;animation:fadeIn .3s ease}
+.slide.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+canvas.hex{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.z{position:relative;z-index:1}
+/* typography */
+.label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#888780;font-weight:400;margin-bottom:1.75rem}
+.h1{font-family:'Playfair Display',serif;font-weight:900;font-size:52px;line-height:1.05;color:#111;margin-bottom:1.5rem}
+.h1.sm{font-size:36px}
+.h1.xs{font-size:28px}
+.h1.gold{color:#C49A00}
+.accent{color:#C49A00}
+.lead{font-size:17px;color:#111;line-height:1.65;margin-bottom:1rem;font-weight:300;max-width:560px}
+.body{font-size:14px;color:#555550;line-height:1.75;font-weight:300;max-width:540px;margin-bottom:1.25rem}
+.small{font-size:13px;color:#555550;line-height:1.7;font-weight:300}
+/* ps tag */
+.ps-box{border:1px solid rgba(0,0,0,.15);border-radius:24px;padding:10px 20px;font-size:13px;color:#555550;display:inline-block;background:#FFFDF5;margin-top:1.5rem}
+/* cards grid */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:1.5rem}
+.card{border:1px solid rgba(0,0,0,.1);border-radius:12px;padding:1.25rem;background:#fff}
+.card-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#888780;font-weight:400;margin-bottom:8px}
+.card-body{font-size:14px;font-weight:500;color:#111;line-height:1.5}
+/* filter items */
+.filter-list{display:flex;flex-direction:column;gap:10px;margin-top:1.5rem}
+.filter-item{display:flex;gap:16px;align-items:flex-start;border:1px solid rgba(0,0,0,.1);border-radius:12px;padding:14px 18px;background:#fff}
+.fnum{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:#C49A00;min-width:22px;line-height:1}
+.ftext{flex:1}
+.ftitle{font-size:13px;font-weight:500;color:#111;margin-bottom:4px}
+.fbody{font-size:13px;color:#555550;line-height:1.5}
+/* lead card */
+.lead-hl{background:#FFF9D6;border:1px solid #C49A00;border-radius:10px;padding:10px 18px;font-family:'Playfair Display',serif;font-weight:700;font-size:22px;color:#111;margin-bottom:1.25rem;display:inline-block}
+.lead-card{background:#FFF9D6;border:1px solid rgba(196,154,0,.4);border-radius:14px;padding:1.75rem 2rem;margin-top:.5rem}
+.lead-name{font-family:'Playfair Display',serif;font-weight:900;font-size:36px;color:#111;margin-bottom:.5rem}
+.lead-badge{display:inline-block;font-size:11px;font-weight:500;background:#F5C100;border:1px solid #C49A00;border-radius:20px;padding:4px 14px;color:#111;margin-bottom:1.25rem}
+.bullets{display:flex;flex-direction:column;gap:12px}
+.bullet-row{display:flex;gap:12px;align-items:flex-start;font-size:13.5px;color:#555550;line-height:1.6}
+.hex-dot{width:9px;height:9px;background:#F5C100;border:1px solid #C49A00;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);flex-shrink:0;margin-top:5px}
+.b-em{font-weight:500;color:#111}
+/* stats */
+.stat-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1.5rem}
+.stat{background:#FFF9D6;border:1px solid rgba(0,0,0,.12);border-radius:10px;padding:12px 18px;min-width:110px}
+.stat-n{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#111;line-height:1}
+.stat-l{font-size:11px;color:#888780;margin-top:3px;font-weight:400}
+/* blockquote */
+.bq{border-left:3px solid #F5C100;padding:2px 0 2px 1rem;font-size:14px;color:#555550;font-style:italic;line-height:1.65;margin-bottom:1.5rem}
+/* pills */
+.pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.25rem}
+.pill{font-size:12px;font-weight:400;padding:6px 14px;border-radius:20px;border:1px solid rgba(0,0,0,.15);color:#555550;background:#fff}
+/* plan */
+.plan-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:1.75rem}
+.plan-card{border:1px solid rgba(0,0,0,.1);border-radius:14px;padding:1.25rem;background:#fff;display:flex;flex-direction:column;gap:0}
+.plan-card.hi{background:#FFF9D6;border-color:#C49A00}
+.plan-day{font-family:'Playfair Display',serif;font-size:42px;font-weight:900;color:#F5C100;-webkit-text-stroke:1px #C49A00;line-height:1;margin-bottom:4px}
+.plan-theme{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:#111;margin-bottom:14px}
+.plan-ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.plan-ul li{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;color:#555550;line-height:1.5}
+.plan-ul li::before{content:'';width:6px;height:6px;background:#F5C100;border:0.5px solid #C49A00;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);flex-shrink:0;margin-top:4px}
+.plan-tied{font-size:11.5px;color:#C49A00;font-style:italic;margin-top:14px;font-weight:500}
+/* briefcase */
+.brief-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:1.5rem}
+.brief-card{border:1px solid rgba(0,0,0,.1);border-radius:12px;padding:1.25rem;background:#fff;display:flex;flex-direction:column;gap:6px}
+.hex-icon{font-size:18px;color:#C49A00;margin-bottom:2px;line-height:1}
+.brief-title{font-size:13.5px;font-weight:500;color:#111}
+.brief-desc{font-size:12px;color:#555550;line-height:1.5;flex:1}
+.badge{display:inline-block;font-size:10.5px;font-weight:500;padding:4px 12px;border-radius:20px;margin-top:6px;width:fit-content}
+.badge.yellow{background:#F5C100;color:#111;border:1px solid #C49A00}
+.badge.black{background:#111;color:#F5C100;border:1px solid #111}
+/* table */
+.ptable{width:100%;border-collapse:collapse;margin-top:1.25rem;font-size:12.5px}
+.ptable th{text-align:left;padding:6px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#888780;font-weight:400;border-bottom:1px solid rgba(0,0,0,.12)}
+.ptable td{padding:9px 10px;border-bottom:.5px solid rgba(0,0,0,.07);color:#555550;vertical-align:middle}
+.ptable tr:last-child td{border-bottom:none}
+.ptable tr:hover td{background:#FFFDF5}
+.co{font-weight:500;color:#111}
+.fit{display:inline-block;font-size:10px;padding:3px 9px;border-radius:10px;background:#FFF9D6;border:1px solid #C49A00;color:#C49A00;font-weight:500}
+/* sequence */
+.seq-row{display:flex;gap:12px;margin-top:1.5rem}
+.seq-card{flex:1;border:1px solid rgba(0,0,0,.1);border-radius:12px;padding:14px}
+.seq-num{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#F5C100;-webkit-text-stroke:.5px #C49A00;line-height:1;margin-bottom:4px}
+.seq-day{font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;color:#888780;font-weight:400;margin-bottom:6px}
+.seq-subj{font-size:12.5px;font-weight:500;color:#111;margin-bottom:6px;line-height:1.35}
+.seq-body{font-size:11.5px;color:#555550;line-height:1.55}
+/* closing */
+.closing-wrap{display:flex;align-items:flex-start;gap:2rem;margin-bottom:1.75rem}
+.bee-art{flex-shrink:0}
+.contact-card{background:#111;border-radius:14px;padding:1.75rem 2rem;display:flex;flex-direction:column;gap:12px}
+.cn-name{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#fff;margin-bottom:.25rem}
+.cn-row{display:flex;align-items:center;gap:14px;font-size:13px}
+.cn-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#888780;font-weight:400;min-width:68px}
+.cn-val{font-weight:500;color:#F5C100;font-size:13px}
+.cn-cta{font-family:'Playfair Display',serif;font-size:15px;color:#fff;font-style:italic;margin-top:.25rem}
+/* nav */
+.nav{position:absolute;bottom:1.5rem;left:0;right:0;display:flex;align-items:center;justify-content:flex-end;gap:12px;padding:0 2rem;z-index:10}
+.dots{display:flex;gap:5px;align-items:center;margin-right:auto}
+.dot{width:7px;height:7px;border-radius:50%;background:#d3d1c7;transition:background .2s}
+.dot.on{background:#F5C100}
+.nbtn{background:#fff;border:1px solid #111;border-radius:8px;padding:7px 18px;font-size:12px;font-weight:500;cursor:pointer;color:#111;font-family:'DM Sans',sans-serif;box-shadow:2px 2px 0 #111;transition:all .15s}
+.nbtn:hover{background:#FFF9D6}
+.nbtn:active{box-shadow:none;transform:translate(2px,2px)}
+.nbtn:disabled{opacity:.3;cursor:not-allowed;box-shadow:none;transform:none}
+/* closing bee & main heading wrap */
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- 00 OPENING -->
+<div class="slide active" id="s0">
+  <canvas class="hex" id="c0"></canvas>
+  <div class="label z">00 — Opening</div>
+  <div class="h1 z">Hi Vin.</div>
+  <p class="lead z">I've been studying Creatorbuzz for two weeks. I'll love to help drive more B2B closed deals.</p>
+  <p class="small z">Anyone can say they're a good SDR. I'd rather show you how I think about your market before you decide if you want me in it.</p>
+  <div class="ps-box z">PS: there's a lead sample, a prospect list, and a full outreach sequence inside.</div>
+</div>
+
+<!-- 01 WHO I AM -->
+<div class="slide" id="s1">
+  <canvas class="hex" id="c1"></canvas>
+  <div class="label z">01 — Who I Am</div>
+  <div class="h1 xs z" style="line-height:1.25;margin-bottom:1.25rem">Random Fact about me: I have a first-class degree despite actively selling my product in the university.</div>
+  <p class="body z">My first sales mentor was my mum. I started in sales, selling books at her shop.</p>
+  <p class="body z">I grew up watching her sell, and by university, I started selling perfumes. I did so consistently, so much that my course-mates did not know my name as they referred to me by my brand name instead.</p>
+  <p class="body z">While at my mum's store, to persuade someone to abandon a behaviour they've held for years, you have to understand why they held onto it, what they wish it did better, and how to communicate the alternative in a way that speaks to what they actually value.</p>
+  <div class="stat-row z">
+    <div class="stat"><div class="stat-n">2+</div><div class="stat-l">years building pipeline</div></div>
+    <div class="stat"><div class="stat-n">98th</div><div class="stat-l">percentile, B2B SaaS</div></div>
+    <div class="stat"><div class="stat-n">100%</div><div class="stat-l">quarterly targets hit</div></div>
+    <div class="stat"><div class="stat-n">8+</div><div class="stat-l">Global market partners managed</div></div>
+  </div>
+  <div class="bq z">I'm an introvert who believes she can do absolutely anything, I make sure to research thoroughly before I act, and when I act, I do so iteratively so that i learn from my current approach.</div>
+  <div class="pill-row z">
+    <span class="pill">ICP research</span>
+    <span class="pill">outbound strategy</span>
+    <span class="pill">pipeline building</span>
+    <span class="pill">Africa + global markets</span>
+  </div>
+</div>
+
+<!-- 02 HOW I THINK -->
+<div class="slide" id="s2">
+  <canvas class="hex" id="c2"></canvas>
+  <div class="label z">02 — How I Think</div>
+  <div class="h1 sm gold z">Here's how I think.</div>
+  <p class="lead z" style="max-width:600px">Beyond getting a list of companies, I built a profile of exactly who Creatorbuzz should be talking to, then went looking for them. My first prospect was Warmly: until I found out they were already an existing client.</p>
+  <div class="grid2 z">
+    <div class="card"><div class="card-label">Starting Point</div><div class="card-body">Creatorbuzz LinkedIn + website: profiling the ICP from the ground up</div></div>
+    <div class="card"><div class="card-label">Insight Extracted</div><div class="card-body">Founders fighting for attention who've outgrown paid ads but haven't leaned into influence yet</div></div>
+    <div class="card"><div class="card-label">Validation Layer</div><div class="card-body">Crunchbase: verified funding, stage, and company size against the criteria</div></div>
+    <div class="card"><div class="card-label">Final Check</div><div class="card-body">LinkedIn pages: confirmed content gaps, event activity, and buyer profile match</div></div>
+  </div>
+</div>
+
+<!-- 03 THE FILTER -->
+<div class="slide" id="s3">
+  <canvas class="hex" id="c3"></canvas>
+  <div class="label z">03 — The Filter</div>
+  <div class="h1 sm z">Five questions i asked while prospecting.</div>
+  <div class="filter-list z">
+    <div class="filter-item"><div class="fnum">1</div><div class="ftext"><div class="ftitle">Is the buyer a LinkedIn-native professional?</div><div class="fbody">If their buyers aren't scrolling LinkedIn, Creatorbuzz's creator network can't reach them. CTOs and engineers out. VP Sales, VP Marketing, Head of Demand Gen, in.</div></div></div>
+    <div class="filter-item"><div class="fnum">2</div><div class="ftext"><div class="ftitle">Is the category crowded enough that differentiation is urgent?</div><div class="fbody">Sales tech, HR tech, marketing tech: noisy spaces where a human face on your brand is a real edge.</div></div></div>
+    <div class="filter-item"><div class="fnum">3</div><div class="ftext"><div class="ftitle">Are they already feeling the pain of paid ads?</div><div class="fbody">Heavy event presence, organic content that's quiet despite the spend: classic signals of diminishing returns.</div></div></div>
+    <div class="filter-item"><div class="fnum">4</div><div class="ftext"><div class="ftitle">20–200 employees, Series A or B?</div><div class="fbody">Small enough to move fast. Large enough to have real budget. This is the decision-maker window.</div></div></div>
+    <div class="filter-item"><div class="fnum">5</div><div class="ftext"><div class="ftitle">Is there a visible content gap?</div><div class="fbody">Strong product, quiet organic presence; means they're ready to invest, not doing it out of habit.</div></div></div>
+  </div>
+</div>
+
+<!-- 04 THE LEAD -->
+<div class="slide" id="s4">
+  <canvas class="hex" id="c4"></canvas>
+  <div class="label z">04 — The Lead</div>
+  <div class="lead-hl z">After disregarding Warmly, i settled on this company:</div>
+  <div class="lead-card z">
+    <div class="lead-name">RB2B</div>
+    <div class="lead-badge">Intentionally Bootstrapped</div>
+    <div class="bullets">
+      <div class="bullet-row"><div class="hex-dot"></div><div><span class="b-em">Buyer profile:</span> VP Sales &amp; VP Marketing at SMB B2B: exactly who lives on LinkedIn and trusts creator content. The ideal buyer we can reach at RB2B is someone like founder Adam Robinson. He views marketing as entertainment first. They don't want a traditional agency; they want a "hit-maker." From my research, their profile is high-risk, high-reward, and they are comfortable with polarizing content if it drives high-volume signups for their free tier.</div></div>
+      <div class="bullet-row"><div class="hex-dot"></div><div><span class="b-em">The pain is public:</span> RB2B's biggest pain is it's founder-dependency. While Adam's personal brand is a powerhouse, if he stops posting, the brand's primary growth engine stalls. They need to decentralize their influence. Creatorbuzz can solve this by recruiting external creators to help grow the brand beyond its founder.</div></div>
+      <div class="bullet-row"><div class="hex-dot"></div><div><span class="b-em">The irony of the pitch:</span> RB2B sells software that tells you exactly who is visiting your website, yet they often struggle to consistently reach new audiences on social platforms without manual effort. We can pitch them the ability to "de-anonymize" the brand to the masses through influencers, essentially doing for RB2B's brand what RB2B's software does for its customers' websites.</div></div>
+      <div class="bullet-row"><div class="hex-dot"></div><div><span class="b-em">Content-aware:</span> RB2B is already "content-aware"; they know that "boring" B2B marketing is a death sentence. However, they need an agency that understands the specific nuances of SaaS video loops and LinkedIn Algorithm hacks. Creatorbuzz fits because beyond making videos; we create content designed to be amplified as Thought Leader ads, a format RB2B already aggressively uses.</div></div>
+      <div class="bullet-row"><div class="hex-dot"></div><div><span class="b-em">Crowded category:</span> sales tech is noisy. Since Creatorbuzz has already proven they can win this specific battle for Warmly, we have the tested approach choice to help RB2B.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 05 THE PLAN -->
+<div class="slide" id="s5">
+  <canvas class="hex" id="c5"></canvas>
+  <div class="label z">05 — The Plan</div>
+  <div class="h1 xs z" style="margin-bottom:.75rem">My first 90 days,<br>built around <span class="accent">Creatorbuzz's 2026 goals.</span></div>
+  <p class="small z" style="margin-bottom:0;color:#555550">You want to scale beyond $2.5M without inflating the team or the ad budget. Here's how i'd get started:</p>
+  <div class="plan-grid z">
+    <div class="plan-card">
+      <div class="plan-day">30</div>
+      <div class="plan-theme">Learn the Hive</div>
+      <ul class="plan-ul">
+        <li>Shadow every client call and study the profiles of previous clients for patterns. Learn the pitch cold. E.g If a client needs a technical RevOps voice, I should instantly know which creator in the network fits.</li>
+        <li>Map which current clients get the best ROI and why. Post at least 2–3 times on my LinkedIn a week to establish myself as a peer to the Marketing VPs you are pitching.</li>
+        <li>Audit existing outreach; what's been tried, what hasn't. Monitor LinkedIn activity, seeing who is commenting on rivals like RB2B, who just got promoted e.g to Head of Growth, and who is "complaining" about their ad spend publicly.</li>
+        <li>Deliver: 25 qualified prospects, decision makers mapped, contacts verified and book 3 qualified discovery calls for you.</li>
+      </ul>
+      <div class="plan-tied">Tied to: understanding your top clients so every new lead fits the same direction.</div>
+    </div>
+    <div class="plan-card hi">
+      <div class="plan-day">60</div>
+      <div class="plan-theme">Work the Comb</div>
+      <ul class="plan-ul">
+        <li>Own top-of-funnel for one segment: sales tools targeting revenue teams. E.g being proficient with tools used at Creatorbuzz to automate the repetitive parts of my job so i can spend 90% of my time on creative strategy and high-level relationships.</li>
+        <li>Run first live 3-touch sequence, test 2 subject line variants.</li>
+        <li>Book 5 qualified discovery calls for you.</li>
+        <li>Report: open rates, reply rates, what's landing.</li>
+      </ul>
+    </div>
+    <div class="plan-card">
+      <div class="plan-day">90</div>
+      <div class="plan-theme">Fill the Hive</div>
+      <ul class="plan-ul">
+        <li>10+ qualified opportunities in active pipeline.</li>
+        <li>First discovery call converted to proposal.</li>
+        <li>A repeatable prospecting playbook actively being made better with monthly iterations.</li>
+        <li>One untapped segment recommendation with research to back it.</li>
+      </ul>
+      <div class="plan-tied">Tied to: scaling past $2.5M without breaking what's already working.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 06 THE BRIEFCASE -->
+<div class="slide" id="s6">
+  <canvas class="hex" id="c6"></canvas>
+  <div class="label z">06 — The Briefcase</div>
+  <div class="h1 sm z">Why should you hire me?</div>
+  <p class="lead z">Most candidates send a CV. Aside from being tech-savvy, here's what I'm walking in with on day one.</p>
+  <div class="brief-grid z">
+    <div class="brief-card">
+      <div class="hex-icon">⬡</div>
+      <div class="brief-title">ICP Filter Framework</div>
+      <div class="brief-desc">A 5-question scoring system to qualify any inbound or outbound prospect in under 2 minutes. Built from Creatorbuzz's actual client portfolio.</div>
+      <span class="badge yellow">In this deck — slide 03</span>
+    </div>
+    <div class="brief-card">
+      <div class="hex-icon">⬡</div>
+      <div class="brief-title">Qualified Lead Sample</div>
+      <div class="brief-desc">One fully-researched company (RB2B) with ICP match reasoning across 5 dimensions. Format ready to replicate at scale with your feedback.</div>
+      <span class="badge yellow">In this deck — slide 04</span>
+    </div>
+    <div class="brief-card">
+      <div class="hex-icon">⬡</div>
+      <div class="brief-title">10-Company Prospect List</div>
+      <div class="brief-desc">B2B SaaS companies filtered against the ICP criteria. Decision makers identified, titles verified, email format confirmed via Hunter.io.</div>
+      <span class="badge black">In this deck — slide 07</span>
+    </div>
+    <div class="brief-card">
+      <div class="hex-icon">⬡</div>
+      <div class="brief-title">3-Touch Outreach Sequence</div>
+      <div class="brief-desc">A cold outreach sequence written specifically for Creatorbuzz's ICP. Signal-based opener, case study touch, clean breakup. Ready to deploy.</div>
+      <span class="badge black">In this deck — slide 07</span>
+    </div>
+  </div>
+</div>
+
+<!-- 07 PROSPECTING DECK -->
+<div class="slide" id="s7">
+  <canvas class="hex" id="c7"></canvas>
+  <div class="label z">07 — The Prospecting Deck</div>
+  <div class="h1 xs z" style="margin-bottom:0">You sell to B2B tech.<br>Here's <span class="accent">who i think should be next.</span></div>
+  <table class="ptable z">
+    <thead><tr><th>Company</th><th>Decision Maker</th><th>Title</th><th>Email</th><th>ICP Fit</th></tr></thead>
+    <tbody>
+      <tr><td><span class="co">Trigify.io</span></td><td>Max Mitcham</td><td>CEO / Head of Growth</td><td>max@trigify.io</td><td><span class="fit">Sales tools</span></td></tr>
+      <tr><td><span class="co">Clay</span></td><td>Bruno Estrella</td><td>Head of Growth Marketing</td><td>bruno@clay.com</td><td><span class="fit">Sales tools</span></td></tr>
+      <tr><td><span class="co">Cargo</span></td><td>Maxime Buhler</td><td>Co-Founder &amp; GTM Lead</td><td>maxime@getcargo.io</td><td><span class="fit">Revenue AI</span></td></tr>
+      <tr><td><span class="co">Navattic</span></td><td>Natalie Marcotullio</td><td>Head of Growth &amp; Ops</td><td>natalie@navattic.com</td><td><span class="fit">Sales tools</span></td></tr>
+      <tr><td><span class="co">FullEnrich</span></td><td>Benjamin Douablin</td><td>CEO &amp; Co-Founder</td><td>ben@fullenrich.com</td><td><span class="fit">Sales tools</span></td></tr>
+    </tbody>
+  </table>
+  <div class="seq-row z">
+    <div class="seq-card">
+      <div class="seq-num">1</div>
+      <div class="seq-day">Day 1 — Opener</div>
+      <div class="seq-subj">Your team just lost 4 customers.</div>
+      <div class="seq-body">Hi [Name], [Company]'s been putting out [Painpoint here]. But your buyers (VPs of Sales, RevOps) are scrolling before they ever search. [The sell here can be tweaked slightly based on their painpoint] Creatorbuzz puts your brand in front of them through creators they already trust. A client in your exact space: 800K impressions, 4x demo requests. Worth a 5 minutes chat?</div>
+    </div>
+    <div class="seq-card">
+      <div class="seq-num">2</div>
+      <div class="seq-day">Day 5 — Proof</div>
+      <div class="seq-subj">One campaign. 800K impressions.</div>
+      <div class="seq-body">Quick follow-up: [Followup leading with a painpoint identified] a power dialer brand ran a creator campaign focused entirely on sales leaders talking about cold calling. 800K impressions, 4x their usual inbound rate, $300–$3K per creator/month. [Company] is in a noisier category than it was 2 years ago. Influence is how you cut through. I could walk you through how you could replicate this for [Company]. Worth a 7 minutes chat?</div>
+    </div>
+    <div class="seq-card">
+      <div class="seq-num">3</div>
+      <div class="seq-day">Day 11 — Close the Loop</div>
+      <div class="seq-subj">A quick tip ahead of your Q3 revenue plan</div>
+      <div class="seq-body">I'll take your silence as either perfect timing or not the right fit. Either way, Demandbase, Adobe, LinkedIn, Storylane are all using this system that has driven [Sample Client result] in the last quarter for them. When Q3 planning comes around, I'm one message away.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 08 CLOSING -->
+<div class="slide" id="s8">
+  <canvas class="hex" id="c8"></canvas>
+  <div class="closing-wrap z">
+    <div style="flex:1">
+      <div class="h1 sm" style="margin-bottom:1rem">I'd love to be a worker<br>at the <span class="accent">hive.</span></div>
+      <p class="small" style="max-width:480px;color:#555550">Knowing you are very experienced in sales too, and I'm not an expert yet, I'll appreciate your feedback on gaps I overlooked and what I could have done better.</p>
+    </div>
+    <div class="bee-art">
+      <svg viewBox="0 0 100 90" width="100" height="90" aria-hidden="true">
+        <ellipse cx="36" cy="30" rx="22" ry="11" fill="rgba(245,193,0,.3)" stroke="#C49A00" stroke-width="1.2"/>
+        <ellipse cx="64" cy="30" rx="22" ry="11" fill="rgba(245,193,0,.3)" stroke="#C49A00" stroke-width="1.2"/>
+        <ellipse cx="50" cy="58" rx="16" ry="22" fill="#F5C100"/>
+        <rect x="34" y="52" width="32" height="6" rx="2" fill="#111"/>
+        <rect x="34" y="62" width="32" height="6" rx="2" fill="#111"/>
+        <circle cx="50" cy="33" r="11" fill="#111"/>
+        <circle cx="46" cy="31" r="2.2" fill="#fff"/>
+        <circle cx="54" cy="31" r="2.2" fill="#fff"/>
+        <circle cx="46.8" cy="31.8" r="1" fill="#111"/>
+        <circle cx="54.8" cy="31.8" r="1" fill="#111"/>
+        <path d="M45 23 Q42 14 37 10" stroke="#111" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <circle cx="37" cy="10" r="2.5" fill="#F5C100" stroke="#C49A00" stroke-width="1"/>
+        <path d="M55 23 Q58 14 63 10" stroke="#111" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <circle cx="63" cy="10" r="2.5" fill="#F5C100" stroke="#C49A00" stroke-width="1"/>
+        <polygon points="50,80 44,70 56,70" fill="#111"/>
+      </svg>
+    </div>
+  </div>
+  <div class="contact-card z">
+    <div class="cn-name">Ijeoma Nneji</div>
+    <div class="cn-row"><span class="cn-lbl">Location</span><span class="cn-val">Kigali, Rwanda</span></div>
+    <div class="cn-row"><span class="cn-lbl">Email</span><span class="cn-val">favourijeom6@gmail.com</span></div>
+    <div class="cn-row"><span class="cn-lbl">LinkedIn</span><span class="cn-val">linkedin.com/in/ijeomanneji-6a631237b/</span></div>
+    <div class="cn-cta">I'm open to a 7-minute chat on how i could help scale Creatorbuzz's clientbase.</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav" id="nav">
+  <div class="dots" id="dots"></div>
+  <button class="nbtn" id="prev" onclick="go(-1)" disabled>← prev</button>
+  <button class="nbtn" id="next" onclick="go(1)">next →</button>
+</div>
+
+</div><!-- /deck -->
+
+<script>
+var cur=0,n=9;
+var dotsEl=document.getElementById('dots');
+for(var i=0;i<n;i++){var d=document.createElement('div');d.className='dot'+(i===0?' on':'');dotsEl.appendChild(d);}
+
+function go(dir){
+  document.getElementById('s'+cur).classList.remove('active');
+  dotsEl.children[cur].classList.remove('on');
+  cur=Math.max(0,Math.min(n-1,cur+dir));
+  document.getElementById('s'+cur).classList.add('active');
+  dotsEl.children[cur].classList.add('on');
+  document.getElementById('prev').disabled=cur===0;
+  document.getElementById('next').disabled=cur===n-1;
+  setTimeout(function(){drawHex(cur);},50);
+}
+
+function drawHex(idx){
+  var canvas=document.getElementById('c'+idx);
+  if(!canvas)return;
+  var slide=document.getElementById('s'+idx);
+  var W=slide.offsetWidth,H=slide.offsetHeight;
+  canvas.width=W;canvas.height=H;
+  var ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,W,H);
+  var R=55;
+  ctx.strokeStyle='rgba(196,154,0,0.13)';
+  ctx.lineWidth=1.2;
+  for(var row=-1;row<14;row++){
+    for(var col=-1;col<12;col++){
+      var cx=col*R*Math.sqrt(3)+(row%2===0?R*Math.sqrt(3)/2:0);
+      var cy=row*R*1.5+R;
+      ctx.beginPath();
+      for(var k=0;k<6;k++){
+        var a=(Math.PI/180)*(60*k-30);
+        var px=cx+R*Math.cos(a),py=cy+R*Math.sin(a);
+        k===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+      }
+      ctx.closePath();ctx.stroke();
+    }
+  }
+}
+
+function drawAll(){for(var i=0;i<n;i++)drawHex(i);}
+window.addEventListener('load',drawAll);
+window.addEventListener('resize',function(){drawHex(cur);});
+</script>
+</body>
+</html>
