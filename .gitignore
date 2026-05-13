@@ -1,0 +1,10 @@
+# Dependencies
+node_modules/
+
+# npm
+npm-debug.log*
+package-lock.json.bak
+
+# System files
+.DS_Store
+Thumbs.db
